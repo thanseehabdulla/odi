@@ -7,6 +7,12 @@ var siding_left = false
 var jumping = false
 var shooting = false
 
+var level_path = "res://gameover.tscn"
+
+var health = 20;
+var maxHealthValue = 20;
+
+
 var WALK_ACCEL = 2000.0 # Higher = Better control, Lower = Sluggish
 var WALK_DEACCEL = 2000.0
 var WALK_MAX_VELOCITY = 300.0
@@ -271,4 +277,25 @@ func _process(delta):
 #	var icon = Globals.get("facebook/icon")
 #	var msg = "I just sneezed on your wall! Beat my score and Stop the Running nose!"
 #	var title = "I just sneezed on your wall!"
-#	Facebook.post("feed", msg, title, link, icon)
+#	Facebook.post("feed", malth = 0.0sg, title, link, icon)
+
+var newHealth = 0.0
+
+func _on_player_body_enter( body ):
+	var bodies=get_colliding_bodies()
+	if "enemy" in bodies[0].get_name():
+		if health > 0 :
+			
+			health -= 10
+			print("health is")
+			print (health)
+			newHealth = ( health * 100 ) / maxHealthValue
+			print(newHealth)
+			get_node("mobile_ui_player/TextureProgress").set_val(newHealth)
+			
+		else:
+			transition.fade_to(level_path)
+			print("gameover")
+			
+		print(bodies[0].get_name())
+	pass # replace with function body
